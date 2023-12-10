@@ -3,7 +3,10 @@ guid: f137c16117266354aae7bc61f92ddb45
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cherryAnim: {instanceID: 0}
+  - sound: {instanceID: 0}
+  - takeCherrySound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

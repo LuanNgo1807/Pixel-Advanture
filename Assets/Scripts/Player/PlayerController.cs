@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     
     public GameObject startPoint;
 
+
     [Header("Sound")]
     public AudioSource playerAudio;
     public AudioClip jumpSound;
@@ -82,8 +83,6 @@ public class PlayerController : MonoBehaviour
         isOnFireTrapOff = Physics2D.OverlapBox(groundCheck.position, new Vector2(1.2f, 1), 0, FireTrapOffLayer);
         flameCollision = Physics2D.OverlapBox(onFire.position, new Vector2(1.5f, 1), 0, flame);
         SetJumpAnimation();
-
-        
     }
     public void SetJump()
     {
@@ -96,7 +95,6 @@ public class PlayerController : MonoBehaviour
         {
             horizontal = Input.GetAxisRaw("Horizontal");
         }
-        /*playerRb.constraints = RigidbodyConstraints2D.FreezePositionY;*/
 
         Move();
         Flip();
@@ -149,17 +147,11 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Spike" && !isInvulnerable && canTakeDamage)
         {
-            StartCoroutine(BlinkEffect());
-            canTakeDamage = false;
-            health.TakeDamage(1);
-            StartCoroutine(ResetDamageCooldown());
+            Shrink();
         }
         else if (collision.gameObject.tag == "Fire" && flameCollision && canTakeDamage)
         {
-            StartCoroutine(BlinkEffect());
-            health.TakeDamage(1);
-            canTakeDamage = false;
-            StartCoroutine(ResetDamageCooldown());
+            Shrink();
             
         }
     }
@@ -169,7 +161,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         canTakeDamage = true;
     }
-
 
 
     IEnumerator BlinkEffect()
@@ -188,6 +179,22 @@ public class PlayerController : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = true;
         isInvulnerable = false;
     }
+    public void Shrink()
+    {
+        StartCoroutine(BlinkEffect());
+        health.TakeDamage(1);
+        canTakeDamage = false;
+        StartCoroutine(ResetDamageCooldown());
+    }
+
+    public void Shrink(int damage)
+    {
+        StartCoroutine(BlinkEffect());
+        health.TakeDamage(damage);
+        canTakeDamage = false;
+        StartCoroutine(ResetDamageCooldown());
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Fan"))
@@ -212,11 +219,7 @@ public class PlayerController : MonoBehaviour
         //if trigger with the saw, player takes damage
         else if (collision.gameObject.CompareTag("Saw") && canTakeDamage)
         {
-            StartCoroutine(BlinkEffect());
-            health.TakeDamage(1);
-            canTakeDamage = false;
-            StartCoroutine(ResetDamageCooldown());
+            Shrink();
         }
     }
-    
 }

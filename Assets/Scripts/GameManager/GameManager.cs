@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
     private PlayerHealth playerHealthScript;
+    public AudioSource sound;
+    public AudioClip takeCherrySound;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateScore(int scoreToAdd)
     {
+        sound.PlayOneShot(takeCherrySound, 1f);
         score += scoreToAdd;
         scoreText.text = "Score:" + score;
     }

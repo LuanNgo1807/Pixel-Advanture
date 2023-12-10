@@ -5,7 +5,8 @@ using UnityEngine;
 public class Cherries : MonoBehaviour
 {
     public Animator cherryAnim;
-    public GameManager gameManagerScript;
+    private GameManager gameManagerScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +22,8 @@ public class Cherries : MonoBehaviour
     {
         if(collision.gameObject.name == "CollisionDetection")
         {
-            /*cherryAnim.SetTrigger("collected");*/
             gameManagerScript.UpdateScore(1);
             Destroy(gameObject);
-            /*StartCoroutine(DelayDestroyCherry());*/
         }
     }
-    /*IEnumerator DelayDestroyCherry()
-    {
-        yield return new WaitForSeconds(cherryAnim.GetCurrentAnimatorStateInfo(0).length);
-        Destroy(gameObject);
-    }*/
 }

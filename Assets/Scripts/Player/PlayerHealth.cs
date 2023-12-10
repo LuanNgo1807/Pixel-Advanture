@@ -7,8 +7,14 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 5;
     public int currentHealth;
     public GameObject player;
+
+    public Animator playerAnim;
+    public CapsuleCollider2D playerCol;
+
     public AudioSource playerHealtSource;
     public AudioClip hitSound;
+
+    public GameObject menuCanvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +33,8 @@ public class PlayerHealth : MonoBehaviour
         playerHealtSource.PlayOneShot(hitSound, 1.0f);
         if(currentHealth <= 0)
         {
-            //destroy player
-            //animation die
-            Destroy(player.gameObject);
+            Destroy(player);
+            menuCanvas.SetActive(true);
         }
     }
 }
